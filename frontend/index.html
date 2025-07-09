@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FareFly - One Go, Every Destination</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with Logo and Login -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex flex-column align-items-center" href="#">
+                <img src="images/logo.png" alt="FareFly Logo" class="logo">
+            </a>
+            
+            <!-- Login Button -->
+            <div class="ms-auto">
+                <a href="#" class="btn btn-outline-primary">
+                    <i class="fas fa-user-circle me-1"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Search -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h1 class="text-center text-white mb-4">Find Your Perfect Trip</h1>
+                    
+                    <!-- Search Form -->
+                    <div class="search-form p-4 rounded shadow">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="departure" class="form-label">From</label>
+                                    <input type="text" class="form-control" id="departure" placeholder="Departure City">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="destination" class="form-label">To</label>
+                                    <input type="text" class="form-control" id="destination" placeholder="Destination City">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="departDate" class="form-label fw-medium">Depart Date</label>
+                                    <input type="date" class="form-control" id="departDate">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="returnDate" class="form-label fw-medium">Return Date</label>
+                                    <input type="date" class="form-control" id="returnDate">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="passengers" class="form-label">Passengers</label>
+                                    <select class="form-select" id="passengers">
+                                        <option value="1">1 Passenger</option>
+                                        <option value="2">2 Passengers</option>
+                                        <option value="3">3 Passengers</option>
+                                        <option value="4">4+ Passengers</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">Search Flights</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Destinations Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Popular Destinations</h2>
+            <div class="row g-4">
+                <!-- Destination Cards -->
+                <div class="col-md-4">
+                    <div class="card destination-card">
+                        <img src="images/paris.png" class="card-img-top" alt="Destination">
+                        <div class="card-body">
+                            <h5 class="card-title">Paris, France</h5>
+                            <p class="card-text">Explore the city of love and its iconic landmarks.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">From $499</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card destination-card">
+                        <img src="images/destination2.jpg" class="card-img-top" alt="Destination">
+                        <div class="card-body">
+                            <h5 class="card-title">Bali, Indonesia</h5>
+                            <p class="card-text">Experience tropical paradise and rich cultural heritage.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">From $689</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card destination-card">
+                        <img src="images/newyork.jpg" class="card-img-top" alt="Destination">
+                        <div class="card-body">
+                            <h5 class="card-title">New York, USA</h5>
+                            <p class="card-text">Discover the city that never sleeps.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">From $399</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Everything You Need for Your Trip</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card text-center p-4">
+                        <i class="fas fa-plane-departure fa-3x mb-3 text-primary"></i>
+                        <h4>Flight Booking</h4>
+                        <p>Find the best deals on flights to your dream destination.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card text-center p-4">
+                        <i class="fas fa-hotel fa-3x mb-3 text-primary"></i>
+                        <h4>Hotel Recommendations</h4>
+                        <p>Discover perfect accommodations at your destination.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card text-center p-4">
+                        <i class="fas fa-map-marked-alt fa-3x mb-3 text-primary"></i>
+                        <h4>Tourist Attractions</h4>
+                        <p>Explore popular landmarks and hidden gems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>FareFly</h5>
+                    <p class="mb-3">one go, every destination</p>
+                    <p>Your trusted companion for hassle-free travel booking.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">About Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Contact Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">© 2025 FareFly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

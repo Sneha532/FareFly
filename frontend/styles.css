@@ -1,0 +1,106 @@
+/* Custom styles for FareFly Travel Booking App */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Header Styles */
+.logo {
+    height: 90px;
+    width: auto;
+}
+
+.tagline {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Hero Section */
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/images.png');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: white;
+}
+
+.search-form {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Destination Cards */
+.destination-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.destination-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.price {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* Service Cards */
+.service-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Custom Button Styles */
+.btn-primary {
+    background-color: #4a89dc;
+    border-color: #4a89dc;
+}
+
+.btn-primary:hover {
+    background-color: #3a6fc9;
+    border-color: #3a6fc9;
+}
+
+.btn-outline-primary {
+    color: #4a89dc;
+    border-color: #4a89dc;
+}
+
+.btn-outline-primary:hover {
+    background-color: #4a89dc;
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+}
+
+footer a:hover {
+    color: #4a89dc !important;
+}
+
+.form-label {
+    margin-bottom: 0.3rem;
+    color: #333;
+}
