@@ -2,9 +2,8 @@ from typing import Any, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from app import crud, models, schemas
-from app.api import deps
-
+from src.app import crud, models, schemas
+from src.app.api import deps
 router = APIRouter()
 
 @router.get("/", response_model=List[schemas.Itinerary])

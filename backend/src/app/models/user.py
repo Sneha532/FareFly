@@ -2,7 +2,7 @@ from sqlalchemy import Boolean, Column, String, DateTime
 from sqlalchemy.orm import relationship
 import datetime
 
-from app.db.base_class import Base
+from src.app.db.base_class import Base  # Fixed import
 
 class User(Base):
     id = Column(String, primary_key=True, index=True)

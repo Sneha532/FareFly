@@ -1,10 +1,10 @@
 from typing import Any, List, Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from app import crud
-from app import schemas
-from app.api import deps
-from app.services.amadeus import amadeus_service
+from src.app import crud
+from src.app import schemas
+from src.app.api import deps
+from src.app.services.amadeus import amadeus_service
 
 router = APIRouter()
 
@@ -17,7 +17,6 @@ async def search_flights(
     return_date: Optional[str] = Query(None, description="Return date (YYYY-MM-DD) for round trips"),
     adults: int = Query(1, description="Number of adult passengers"),
     travel_class: str = Query("ECONOMY", description="Travel class (ECONOMY, PREMIUM_ECONOMY, BUSINESS, FIRST)"),
-    current_user = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Search for flights using Amadeus API

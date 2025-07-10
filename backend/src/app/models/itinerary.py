@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 import datetime
 import uuid
 
-from app.db.base_class import Base
+from src.app.db.base_class import Base  # Fixed import
 
 class Itinerary(Base):
     id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))

@@ -2,9 +2,9 @@ from typing import List, Optional, Dict, Any
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-from app.crud.base import CRUDBase
-from app.models.itinerary import Itinerary
-from app.schemas.itinerary import ItineraryCreate, ItineraryUpdate
+from src.app.crud.base import CRUDBase
+from src.app.models.itinerary import Itinerary
+from src.app.schemas.itinerary import ItineraryCreate, ItineraryUpdate
 
 class CRUDItinerary(CRUDBase[Itinerary, ItineraryCreate, ItineraryUpdate]):
     def create_with_owner(

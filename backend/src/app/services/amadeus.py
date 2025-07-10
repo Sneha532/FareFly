@@ -1,5 +1,5 @@
 from amadeus import Client, ResponseError
-from app.core.config import settings
+from src.app.core.config import settings
 from fastapi import HTTPException
 from typing import Dict, Any, List, Optional
 import logging

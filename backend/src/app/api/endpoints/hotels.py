@@ -2,9 +2,9 @@ from typing import Any, List, Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from app import schemas, crud
-from app.api import deps
-from app.services.amadeus import amadeus_service
+from src.app import schemas, crud  # Fixed import
+from src.app.api import deps  # Fixed import
+from src.app.services.amadeus import amadeus_service  # Fixed import
 
 router = APIRouter()
 

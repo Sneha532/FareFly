@@ -1,4 +1,4 @@
 # Import all the models so that Alembic can detect them
-from .base_class import Base
-from app.models.user import User
-from app.models.itinerary import Itinerary
+from src.app.db.base_class import Base
+from src.app.models.user import User
+from src.app.models.itinerary import Itinerary
