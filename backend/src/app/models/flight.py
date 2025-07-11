@@ -5,7 +5,9 @@ import datetime
 from src.app.db.base_class import Base  # Fixed import
 from src.app.models.user import User  # Import User model
 
-class flight(Base):
+class Flight(Base):  
+    __tablename__ = "flight"  # Explicitly set the table name
+
     booking_id= Column(String, primary_key=True, index=True)
     user_id = Column(String, ForeignKey(User.user_id), nullable=False)
     flight_id = Column(String, nullable=False)

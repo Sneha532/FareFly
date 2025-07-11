@@ -5,7 +5,8 @@ import datetime
 from src.app.db.base_class import Base  # Fixed import
 
 class User(Base):
-    id = Column(String, primary_key=True, index=True)
+    __tablename__ = "user" 
+    user_id = Column(String, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     full_name = Column(String, nullable=True)

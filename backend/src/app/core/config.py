@@ -20,6 +20,11 @@ class Settings(BaseSettings):
     
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
+    
+    # Additional API keys
+    GEMINI_API_KEY: Optional[str] = None
+    UNSPLASH_ACCESS_KEY: Optional[str] = None
+    UNSPLASH_SECRET_KEY: Optional[str] = None
 
     class Config:
         env_file = ".env"
