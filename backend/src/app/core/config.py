@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     
     # Additional API keys
     GEMINI_API_KEY: Optional[str] = None
-    UNSPLASH_ACCESS_KEY: Optional[str] = None
+    UNSPLASH_ACCESS_KEY: str = ""
     UNSPLASH_SECRET_KEY: Optional[str] = None
 
     class Config:

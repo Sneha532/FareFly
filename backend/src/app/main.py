@@ -22,6 +22,6 @@ app.add_middleware(
 # Include all API routes
 app.include_router(api_router, prefix="/api")
 
-@app.get("/")
+@app.get("/")       
 async def root():
     return {"message": "Welcome to FareFly API"}

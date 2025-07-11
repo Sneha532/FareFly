@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Recommendations | FareFly</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex flex-column align-items-center" href="index.html">
+                <img src="images/logo.png" alt="FareFly Logo" class="logo">
+            </a>
+            
+            <!-- Navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="recommendations.html">Recommendations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <h1 class="mb-4">Discover Tourist Attractions</h1>
+        
+        <!-- Search Form -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form id="recommendationForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="destination" class="form-label">Destination</label>
+                            <input type="text" class="form-control" id="destination" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="interests" class="form-label">Interests</label>
+                            <input type="text" class="form-control" id="interests" placeholder="e.g. historical, cultural, food">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="duration" class="form-label">Duration (days)</label>
+                            <input type="number" class="form-control" id="duration" min="1" max="30" value="3">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="budget" class="form-label">Budget</label>
+                            <select class="form-control" id="budget">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Get Recommendations</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div id="resultsContainer" class="row g-4"></div>
+        
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="text-center my-5 d-none">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Finding the best places for you...</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('recommendationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').classList.remove('d-none');
+            document.getElementById('resultsContainer').innerHTML = '';
+            
+            // Get form values
+            const destination = document.getElementById('destination').value;
+            const interests = document.getElementById('interests').value.split(',').map(i => i.trim()).filter(i => i);
+            const duration = document.getElementById('duration').value;
+            const budget = document.getElementById('budget').value;
+            
+            // Build query parameters
+            const params = new URLSearchParams();
+            params.append('destination', destination);
+            interests.forEach(interest => params.append('interests', interest));
+            params.append('duration_days', duration);
+            params.append('budget', budget);
+            
+            try {
+                // Make API request
+                const response = await fetch(`http://127.0.0.1:8000/api/recommendations/tourist-places?${params.toString()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Hide loading indicator
+                document.getElementById('loadingIndicator').classList.add('d-none');
+                
+                // Display results
+                const resultsContainer = document.getElementById('resultsContainer');
+                
+                if (data.length === 0) {
+                    resultsContainer.innerHTML = '<div class="col-12"><div class="alert alert-info">No recommendations found.</div></div>';
+                    return;
+                }
+                
+                data.forEach(place => {
+                    resultsContainer.innerHTML += `
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="${place.image_url || 'https://placehold.co/600x400/007bff/white?text=No+Image'}" 
+                                     class="card-img-top" alt="${place.name}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${place.name}</h5>
+                                    <p class="card-text">${place.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary">${place.category}</span>
+                                        <span class="badge bg-info">$${place.estimated_cost}</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <small>
+                                        <i class="far fa-clock me-1"></i>${place.estimated_time} hours | 
+                                        <i class="far fa-calendar me-1"></i>Best: ${place.best_time_to_visit}
+                                    </small>
+                                    ${place.image_author ? 
+                                        `<div class="mt-2 small">Photo by <a href="${place.image_attribution_url}" target="_blank">${place.image_author}</a> on Unsplash</div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loadingIndicator').classList.add('d-none');
+                document.getElementById('resultsContainer').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            Error fetching recommendations: ${error.message}
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0">© 2025 FareFly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
