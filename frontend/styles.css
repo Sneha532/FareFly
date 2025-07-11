@@ -20,7 +20,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/images.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../frontend/images/images.png');
     background-size: cover;
     background-position: center;
     padding: 100px 0;
