@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FareFly</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        
+        .form-logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-tabs .nav-link {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .auth-tabs .nav-link.active {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+        
+        .auth-form {
+            margin-top: 20px;
+        }
+        
+        .form-floating {
+            margin-bottom: 15px;
+        }
+        
+        .social-login {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .social-btn {
+            width: 100%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .social-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex flex-column align-items-center" href="index.html">
+                <img src="images/logo.png" alt="FareFly Logo" class="logo">
+            </a>
+            
+            <!-- Navigation -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommendations.html">Tourist Spots</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login/Registration Container -->
+    <div class="container">
+        <div class="auth-container">
+            <div class="text-center mb-4">
+                <img src="images/logo.png" alt="FareFly Logo" class="form-logo">
+                <h3>Welcome to FareFly</h3>
+                <p class="text-muted">Your journey begins here</p>
+            </div>
+            
+            <!-- Auth Tabs -->
+            <ul class="nav nav-tabs auth-tabs mb-3" id="authTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-pane" type="button" role="tab" aria-selected="true">Login</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-pane" type="button" role="tab" aria-selected="false">Register</button>
+                </li>
+            </ul>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" id="authTabContent">
+                <!-- Login Tab -->
+                <div class="tab-pane fade show active" id="login-pane" role="tabpanel" aria-labelledby="login-tab">
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
+                            <label for="loginEmail">Email address</label>
+                        </div>
+                        
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                            <label for="loginPassword">Password</label>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="text-decoration-none">Forgot password?</a>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 py-2" type="submit">Sign In</button>
+                        
+                        <!-- Social Login Options -->
+                        <div class="social-login">
+                            <p class="text-center mb-3">Or sign in with</p>
+                            <button type="button" class="btn btn-outline-dark social-btn mb-2">
+                                <i class="fab fa-google"></i> Sign in with Google
+                            </button>
+                            <button type="button" class="btn btn-outline-primary social-btn">
+                                <i class="fab fa-facebook-f"></i> Sign in with Facebook
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Register Tab -->
+                <div class="tab-pane fade" id="register-pane" role="tabpanel" aria-labelledby="register-tab">
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="registerName" placeholder="Full Name" required>
+                            <label for="registerName">Full Name</label>
+                        </div>
+                        
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="registerEmail" placeholder="name@example.com" required>
+                            <label for="registerEmail">Email address</label>
+                        </div>
+                        
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Password" required>
+                            <label for="registerPassword">Password</label>
+                            <div class="form-text">Password must be at least 8 characters with letters and numbers.</div>
+                        </div>
+                        
+                        <div class="form-floating mt-3">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                            <label for="confirmPassword">Confirm Password</label>
+                        </div>
+                        
+                        <div class="form-check mb-4 mt-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 py-2" type="submit">Create Account</button>
+                        
+                        <!-- Social Registration -->
+                        <div class="social-login">
+                            <p class="text-center mb-3">Or register with</p>
+                            <button type="button" class="btn btn-outline-dark social-btn mb-2">
+                                <i class="fab fa-google"></i> Register with Google
+                            </button>
+                            <button type="button" class="btn btn-outline-primary social-btn">
+                                <i class="fab fa-facebook-f"></i> Register with Facebook
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>FareFly</h5>
+                    <p class="mb-3">one go, every destination</p>
+                    <p>Your trusted companion for hassle-free travel booking.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">About Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Contact Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">© 2025 FareFly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // In a real application, you would send these credentials to your backend API
+                console.log('Login attempt:', { email });
+                
+                // Simulate API call
+                fetch('http://127.0.0.1:8000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'username': email,
+                        'password': password
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Login failed');
+                })
+                .then(data => {
+                    // Store the token in localStorage
+                    localStorage.setItem('access_token', data.access_token);
+                    
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                })
+                .catch(error => {
+                    alert('Login failed. Please check your credentials.');
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Registration form submission
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Password validation
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                // In a real application, you would send this data to your backend API
+                console.log('Registration attempt:', { name, email });
+                
+                // Simulate API call
+                fetch('http://127.0.0.1:8000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        'email': email,
+                        'password': password,
+                        'full_name': name
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Registration failed');
+                })
+                .then(data => {
+                    // Registration successful, switch to login tab
+                    alert('Registration successful! Please log in with your credentials.');
+                    document.getElementById('login-tab').click();
+                })
+                .catch(error => {
+                    alert('Registration failed. Please try again.');
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

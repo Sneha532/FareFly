@@ -25,7 +25,7 @@
             
             <!-- Login Button -->
             <div class="ms-auto">
-                <a href="#" class="btn btn-outline-primary">
+                <a href="login.html" class="btn btn-outline-primary">
                     <i class="fas fa-user-circle me-1"></i> Login
                 </a>
             </div>
@@ -41,27 +41,27 @@
                     
                     <!-- Search Form -->
                     <div class="search-form p-4 rounded shadow">
-                        <form>
+                        <form action="search-results.html" method="get">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="departure" class="form-label">From</label>
-                                    <input type="text" class="form-control" id="departure" placeholder="Departure City">
+                                    <input type="text" class="form-control" id="departure" name="departure" placeholder="Departure City">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="destination" class="form-label">To</label>
-                                    <input type="text" class="form-control" id="destination" placeholder="Destination City">
+                                    <input type="text" class="form-control" id="destination" name="destination" placeholder="Destination City">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="departDate" class="form-label fw-medium">Depart Date</label>
-                                    <input type="date" class="form-control" id="departDate">
+                                    <input type="date" class="form-control" id="departDate" name="departDate">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="returnDate" class="form-label fw-medium">Return Date</label>
-                                    <input type="date" class="form-control" id="returnDate">
+                                    <input type="date" class="form-control" id="returnDate" name="returnDate">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="passengers" class="form-label">Passengers</label>
-                                    <select class="form-select" id="passengers">
+                                    <select class="form-select" id="passengers" name="passengers">
                                         <option value="1">1 Passenger</option>
                                         <option value="2">2 Passengers</option>
                                         <option value="3">3 Passengers</option>

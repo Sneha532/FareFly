@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | FareFly</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with Logo and Login -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-secondary">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex flex-column align-items-center" href="index.html">
+                <img src="images/logo.png" alt="FareFly Logo" class="logo">
+            </a>
+            
+            <!-- Navigation -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommendations.html">Tourist Spots</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link btn btn-outline-primary">
+                            <i class="fas fa-user-circle me-1"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-4">
+        <!-- Search Summary -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0"><span id="departureCity">New York</span> to <span id="destinationCity">Paris</span></h5>
+                        <p class="text-muted mb-0"><span id="departureDate">Jul 15, 2025</span> - <span id="returnDate">Jul 22, 2025</span> · <span id="passengerCount">2</span> Passengers</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modifySearchModal">
+                        Modify Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="resultsTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="flights-tab" data-bs-toggle="tab" href="#flights">Flights</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="hotels-tab" data-bs-toggle="tab" href="#hotels">Hotels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="combined-tab" data-bs-toggle="tab" href="#combined">Flight + Hotel</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Flights Tab -->
+            <div class="tab-pane fade show active" id="flights">
+                <!-- Flight Filters -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="sortFlights" class="form-label">Sort By</label>
+                                <select id="sortFlights" class="form-select">
+                                    <option value="price">Price (Lowest first)</option>
+                                    <option value="duration">Duration (Shortest first)</option>
+                                    <option value="departure">Departure (Earliest first)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="filterAirlines" class="form-label">Airlines</label>
+                                <select id="filterAirlines" class="form-select">
+                                    <option value="">All Airlines</option>
+                                    <option value="delta">Delta</option>
+                                    <option value="american">American Airlines</option>
+                                    <option value="united">United</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="maxStops" class="form-label">Stops</label>
+                                <select id="maxStops" class="form-select">
+                                    <option value="">Any</option>
+                                    <option value="0">Non-stop only</option>
+                                    <option value="1">1 stop or fewer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label d-block">Price Range</label>
+                                <div class="d-flex align-items-center">
+                                    <span>$300</span>
+                                    <input type="range" class="form-range mx-2" id="priceRange" min="300" max="2000" value="2000">
+                                    <span>$2000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Flight Results -->
+                <div id="flightResults">
+                    <!-- Flight Result Item 1 -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <img src="images/delta-logo.png" alt="Delta Airlines" class="img-fluid" style="max-height: 40px;">
+                                    <p class="mb-0">Delta</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="mb-0">8:30 AM</h5>
+                                            <p class="text-muted mb-0">JFK</p>
+                                        </div>
+                                        <div class="mx-2">
+                                            <i class="fas fa-plane"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0">9:45 PM</h5>
+                                            <p class="text-muted mb-0">CDG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">7h 15m</p>
+                                    <p class="text-muted mb-0">Non-stop</p>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
+                                    <p class="mb-0"><i class="fas fa-plug me-1"></i> Power</p>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <h4 class="text-primary mb-2">$549</h4>
+                                    <button class="btn btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flight Result Item 2 -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <img src="images/american-logo.png" alt="American Airlines" class="img-fluid" style="max-height: 40px;">
+                                    <p class="mb-0">American</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="mb-0">11:20 AM</h5>
+                                            <p class="text-muted mb-0">JFK</p>
+                                        </div>
+                                        <div class="mx-2">
+                                            <i class="fas fa-plane"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0">1:15 AM</h5>
+                                            <p class="text-muted mb-0">CDG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">7h 55m</p>
+                                    <p class="text-muted mb-0">Non-stop</p>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
+                                    <p class="mb-0"><i class="fas fa-utensils me-1"></i> Meal</p>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <h4 class="text-primary mb-2">$489</h4>
+                                    <button class="btn btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flight Result Item 3 -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <img src="images/united-logo.png" alt="United Airlines" class="img-fluid" style="max-height: 40px;">
+                                    <p class="mb-0">United</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="mb-0">2:15 PM</h5>
+                                            <p class="text-muted mb-0">JFK</p>
+                                        </div>
+                                        <div class="mx-2">
+                                            <i class="fas fa-plane"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0">4:30 AM</h5>
+                                            <p class="text-muted mb-0">CDG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">8h 15m</p>
+                                    <p class="text-muted mb-0">Non-stop</p>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
+                                    <p class="mb-0"><i class="fas fa-tv me-1"></i> Entertainment</p>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <h4 class="text-primary mb-2">$529</h4>
+                                    <button class="btn btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Show More Results Button -->
+                    <div class="text-center mt-4 mb-5">
+                        <button id="loadMoreFlights" class="btn btn-outline-primary px-4">
+                            Show More Results <i class="fas fa-chevron-down ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotels Tab -->
+            <div class="tab-pane fade" id="hotels">
+                <!-- Hotel Filters -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="sortHotels" class="form-label">Sort By</label>
+                                <select id="sortHotels" class="form-select">
+                                    <option value="price-asc">Price (Lowest first)</option>
+                                    <option value="price-desc">Price (Highest first)</option>
+                                    <option value="rating">Rating (Highest first)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="filterStars" class="form-label">Star Rating</label>
+                                <select id="filterStars" class="form-select">
+                                    <option value="">All Ratings</option>
+                                    <option value="5">5 Stars</option>
+                                    <option value="4">4+ Stars</option>
+                                    <option value="3">3+ Stars</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="filterAmenities" class="form-label">Amenities</label>
+                                <select id="filterAmenities" class="form-select">
+                                    <option value="">All Amenities</option>
+                                    <option value="pool">Pool</option>
+                                    <option value="spa">Spa</option>
+                                    <option value="gym">Fitness Center</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label d-block">Price Range</label>
+                                <div class="d-flex align-items-center">
+                                    <span>$50</span>
+                                    <input type="range" class="form-range mx-2" id="hotelPriceRange" min="50" max="500" value="500">
+                                    <span>$500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hotel Results -->
+                <div id="hotelResults" class="row g-4">
+                    <!-- Hotel Result Item 1 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,paris" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Grand Hotel Paris</h5>
+                                    <span class="badge bg-primary">4.5 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Central Paris, 0.5 mi from Eiffel Tower</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">Free WiFi</span>
+                                    <span class="badge bg-light text-dark me-1">Pool</span>
+                                    <span class="badge bg-light text-dark">Breakfast</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$129</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Result Item 2 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,luxury" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Luxury Suites Paris</h5>
+                                    <span class="badge bg-primary">5.0 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Champs-Élysées, Paris</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">Spa</span>
+                                    <span class="badge bg-light text-dark me-1">Fine Dining</span>
+                                    <span class="badge bg-light text-dark">Room Service</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$289</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Result Item 3 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,boutique" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Boutique Hotel Marais</h5>
+                                    <span class="badge bg-primary">4.3 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Le Marais, Paris</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">Boutique</span>
+                                    <span class="badge bg-light text-dark me-1">Bar</span>
+                                    <span class="badge bg-light text-dark">Garden</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$159</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Result Item 4 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,budget" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Budget Comfort Inn</h5>
+                                    <span class="badge bg-primary">3.8 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Montmartre, Paris</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">WiFi</span>
+                                    <span class="badge bg-light text-dark">Continental Breakfast</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$89</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Result Item 5 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,riverside" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Seine River View Hotel</h5>
+                                    <span class="badge bg-primary">4.7 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Seine Riverside, Paris</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">River View</span>
+                                    <span class="badge bg-light text-dark me-1">Restaurant</span>
+                                    <span class="badge bg-light text-dark">Gym</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$199</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Result Item 6 -->
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,apartment" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Latin Quarter Apartments</h5>
+                                    <span class="badge bg-primary">4.2 ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Latin Quarter, Paris</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">Kitchenette</span>
+                                    <span class="badge bg-light text-dark me-1">Laundry</span>
+                                    <span class="badge bg-light text-dark">WiFi</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">$119</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Explore More Hotels -->
+                    <div class="col-12 text-center mt-4 mb-5">
+                        <button id="loadMoreHotels" class="btn btn-outline-primary px-4">
+                            Explore More Hotels <i class="fas fa-chevron-down ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combined Tab -->
+            <div class="tab-pane fade" id="combined">
+                <div class="alert alert-info">
+                    <p class="mb-0">Book your flight and hotel together to save up to 25%!</p>
+                </div>
+                
+                <!-- Combined packages will go here -->
+                <div class="text-center py-5">
+                    <img src="images/package-deals.svg" alt="Package Deals" style="max-width: 200px;" class="mb-3">
+                    <h3>Coming Soon</h3>
+                    <p>We're working on fantastic flight + hotel packages for you.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tourist Attractions Section -->
+        <div class="card mt-5">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h4>Discover Tourist Attractions in Paris</h4>
+                        <p class="mb-0">Find the best places to visit, landmarks to see, and experiences to enjoy during your trip.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <a href="recommendations.html" class="btn btn-primary">
+                            Explore Tourist Spots <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modify Search Modal -->
+    <div class="modal fade" id="modifySearchModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modify Your Search</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="modifyDeparture" class="form-label">From</label>
+                                <input type="text" class="form-control" id="modifyDeparture" value="New York">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modifyDestination" class="form-label">To</label>
+                                <input type="text" class="form-control" id="modifyDestination" value="Paris">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modifyDepartDate" class="form-label">Depart Date</label>
+                                <input type="date" class="form-control" id="modifyDepartDate" value="2025-07-15">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modifyReturnDate" class="form-label">Return Date</label>
+                                <input type="date" class="form-control" id="modifyReturnDate" value="2025-07-22">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modifyPassengers" class="form-label">Passengers</label>
+                                <select class="form-select" id="modifyPassengers">
+                                    <option value="1">1 Passenger</option>
+                                    <option value="2" selected>2 Passengers</option>
+                                    <option value="3">3 Passengers</option>
+                                    <option value="4">4+ Passengers</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Update Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>FareFly</h5>
+                    <p class="mb-3">one go, every destination</p>
+                    <p>Your trusted companion for hassle-free travel booking.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">About Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Contact Us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                        <li class="me-3"><a class="text-white" href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">© 2025 FareFly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse URL parameters to fill in search details
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('departure')) {
+                document.getElementById('departureCity').textContent = urlParams.get('departure');
+            }
+            if (urlParams.has('destination')) {
+                document.getElementById('destinationCity').textContent = urlParams.get('destination');
+            }
+            if (urlParams.has('departDate')) {
+                // Format date for display
+                const departDate = new Date(urlParams.get('departDate'));
+                document.getElementById('departureDate').textContent = departDate.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                });
+            }
+            if (urlParams.has('returnDate')) {
+                // Format date for display
+                const returnDate = new Date(urlParams.get('returnDate'));
+                document.getElementById('returnDate').textContent = returnDate.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                });
+            }
+            if (urlParams.has('passengers')) {
+                document.getElementById('passengerCount').textContent = urlParams.get('passengers');
+            }
+            
+            // Load More buttons functionality
+            document.getElementById('loadMoreFlights').addEventListener('click', function() {
+                // In a real app, this would load more flights from an API
+                alert('In a real application, this would load more flight options from the server.');
+            });
+            
+            document.getElementById('loadMoreHotels').addEventListener('click', function() {
+                // In a real app, this would load more hotels from an API
+                alert('In a real application, this would load more hotel options from the server.');
+            });
+            
+            // Filter and sort functionality for hotels
+            document.getElementById('sortHotels').addEventListener('change', function() {
+                // In a real app, this would resort the hotel results
+                console.log('Sorting hotels by: ' + this.value);
+            });
+            
+            document.getElementById('filterStars').addEventListener('change', function() {
+                // In a real app, this would filter the hotel results
+                console.log('Filtering hotels by star rating: ' + this.value);
+            });
+        });
+    </script>
+</body>
+</html>
