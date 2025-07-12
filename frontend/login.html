@@ -241,34 +241,49 @@
             document.getElementById('loginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                const email = document.getElementById('loginEmail').value;
+                // Get form values
+                const email = document.getElementById('loginEmail').value.trim();
                 const password = document.getElementById('loginPassword').value;
                 
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
+                
                 try {
+                    // FIXED: Send JSON with email field (not username)
                     const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/json',  // Changed from form-urlencoded to JSON
                         },
-                        body: new URLSearchParams({
-                            'username': email,
-                            'password': password
+                        body: JSON.stringify({
+                            email: email,  // Changed from username to email
+                            password: password
                         })
                     });
                     
-                    if (!response.ok) {
-                        throw new Error('Login failed');
-                    }
-                    
                     const data = await response.json();
-                    // Store token in localStorage
-                    localStorage.setItem('access_token', data.access_token);
                     
-                    // Redirect to home page or search page
-                    window.location.href = 'index.html';
+                    if (response.ok) {
+                        // Store the token
+                        localStorage.setItem('access_token', data.access_token);
+                        
+                        // Redirect to home or previous page
+                        const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                        window.location.href = redirectUrl;
+                    } else {
+                        // Show error message
+                        alert(`Login failed: ${data.detail || 'Please check your credentials'}`);
+                    }
                 } catch (error) {
-                    alert('Login failed. Please check your credentials.');
-                    console.error('Error:', error);
+                    console.error('Error during login:', error);
+                    alert('Login failed. Please try again later.');
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                 }
             });
             
