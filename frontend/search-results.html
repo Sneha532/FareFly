@@ -13,6 +13,11 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .bg-custom-grey {
+          background-color: #808080; /* Adjust the hex code for different shades */
+        }
+    </style>
 </head>
 <body>
     <!-- Header with Logo and Login -->
@@ -122,129 +127,22 @@
                 
                 <!-- Flight Results -->
                 <div id="flightResults">
-                    <!-- Flight Result Item 1 -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-md-2 text-center">
-                                    <img src="images/delta-logo.png" alt="Delta Airlines" class="img-fluid" style="max-height: 40px;">
-                                    <p class="mb-0">Delta</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h5 class="mb-0">8:30 AM</h5>
-                                            <p class="text-muted mb-0">JFK</p>
-                                        </div>
-                                        <div class="mx-2">
-                                            <i class="fas fa-plane"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="mb-0">9:45 PM</h5>
-                                            <p class="text-muted mb-0">CDG</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0">7h 15m</p>
-                                    <p class="text-muted mb-0">Non-stop</p>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
-                                    <p class="mb-0"><i class="fas fa-plug me-1"></i> Power</p>
-                                </div>
-                                <div class="col-md-3 text-end">
-                                    <h4 class="text-primary mb-2">$549</h4>
-                                    <button class="btn btn-primary">Select</button>
-                                </div>
-                            </div>
+                    <!-- Loading indicator -->
+                    <div id="flightLoadingIndicator" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
+                        <p class="mt-3">Loading flight results...</p>
                     </div>
+                    
+                    <!-- Results will be dynamically inserted here -->
+                </div>
 
-                    <!-- Flight Result Item 2 -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-md-2 text-center">
-                                    <img src="images/american-logo.png" alt="American Airlines" class="img-fluid" style="max-height: 40px;">
-                                    <p class="mb-0">American</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h5 class="mb-0">11:20 AM</h5>
-                                            <p class="text-muted mb-0">JFK</p>
-                                        </div>
-                                        <div class="mx-2">
-                                            <i class="fas fa-plane"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="mb-0">1:15 AM</h5>
-                                            <p class="text-muted mb-0">CDG</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0">7h 55m</p>
-                                    <p class="text-muted mb-0">Non-stop</p>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
-                                    <p class="mb-0"><i class="fas fa-utensils me-1"></i> Meal</p>
-                                </div>
-                                <div class="col-md-3 text-end">
-                                    <h4 class="text-primary mb-2">$489</h4>
-                                    <button class="btn btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Flight Result Item 3 -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-md-2 text-center">
-                                    <img src="images/united-logo.png" alt="United Airlines" class="img-fluid" style="max-height: 40px;">
-                                    <p class="mb-0">United</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h5 class="mb-0">2:15 PM</h5>
-                                            <p class="text-muted mb-0">JFK</p>
-                                        </div>
-                                        <div class="mx-2">
-                                            <i class="fas fa-plane"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="mb-0">4:30 AM</h5>
-                                            <p class="text-muted mb-0">CDG</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0">8h 15m</p>
-                                    <p class="text-muted mb-0">Non-stop</p>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p class="mb-0"><i class="fas fa-wifi me-1"></i> WiFi</p>
-                                    <p class="mb-0"><i class="fas fa-tv me-1"></i> Entertainment</p>
-                                </div>
-                                <div class="col-md-3 text-end">
-                                    <h4 class="text-primary mb-2">$529</h4>
-                                    <button class="btn btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Show More Results Button -->
-                    <div class="text-center mt-4 mb-5">
-                        <button id="loadMoreFlights" class="btn btn-outline-primary px-4">
-                            Show More Results <i class="fas fa-chevron-down ms-2"></i>
-                        </button>
-                    </div>
+                <!-- Show More Results Button -->
+                <div class="text-center mt-4 mb-5">
+                    <button id="loadMoreFlights" class="btn btn-outline-primary px-4">
+                        Show More Results <i class="fas fa-chevron-down ms-2"></i>
+                    </button>
                 </div>
             </div>
 
@@ -294,167 +192,14 @@
 
                 <!-- Hotel Results -->
                 <div id="hotelResults" class="row g-4">
-                    <!-- Hotel Result Item 1 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,paris" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Grand Hotel Paris</h5>
-                                    <span class="badge bg-primary">4.5 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Central Paris, 0.5 mi from Eiffel Tower</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">Free WiFi</span>
-                                    <span class="badge bg-light text-dark me-1">Pool</span>
-                                    <span class="badge bg-light text-dark">Breakfast</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$129</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Hotel results will be inserted here -->
+                </div>
 
-                    <!-- Hotel Result Item 2 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,luxury" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Luxury Suites Paris</h5>
-                                    <span class="badge bg-primary">5.0 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Champs-Élysées, Paris</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">Spa</span>
-                                    <span class="badge bg-light text-dark me-1">Fine Dining</span>
-                                    <span class="badge bg-light text-dark">Room Service</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$289</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Result Item 3 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,boutique" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Boutique Hotel Marais</h5>
-                                    <span class="badge bg-primary">4.3 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Le Marais, Paris</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">Boutique</span>
-                                    <span class="badge bg-light text-dark me-1">Bar</span>
-                                    <span class="badge bg-light text-dark">Garden</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$159</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Result Item 4 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,budget" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Budget Comfort Inn</h5>
-                                    <span class="badge bg-primary">3.8 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Montmartre, Paris</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">WiFi</span>
-                                    <span class="badge bg-light text-dark">Continental Breakfast</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$89</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Result Item 5 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,riverside" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Seine River View Hotel</h5>
-                                    <span class="badge bg-primary">4.7 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Seine Riverside, Paris</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">River View</span>
-                                    <span class="badge bg-light text-dark me-1">Restaurant</span>
-                                    <span class="badge bg-light text-dark">Gym</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$199</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Result Item 6 -->
-                    <div class="col-md-4">
-                        <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,apartment" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0">Latin Quarter Apartments</h5>
-                                    <span class="badge bg-primary">4.2 ★</span>
-                                </div>
-                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>Latin Quarter, Paris</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark me-1">Kitchenette</span>
-                                    <span class="badge bg-light text-dark me-1">Laundry</span>
-                                    <span class="badge bg-light text-dark">WiFi</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-4 fw-bold text-primary">$119</span>
-                                        <span class="text-muted">/night</span>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary">Select</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Explore More Hotels -->
-                    <div class="col-12 text-center mt-4 mb-5">
-                        <button id="loadMoreHotels" class="btn btn-outline-primary px-4">
-                            Explore More Hotels <i class="fas fa-chevron-down ms-2"></i>
-                        </button>
-                    </div>
+                <!-- Show More Results Button -->
+                <div class="text-center mt-4 mb-5">
+                    <button id="loadMoreHotels" class="btn btn-outline-primary px-4">
+                        Explore More Hotels <i class="fas fa-chevron-down ms-2"></i>
+                    </button>
                 </div>
             </div>
 
@@ -577,54 +322,408 @@
     <!-- Custom JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Parse URL parameters to fill in search details
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('departure')) {
-                document.getElementById('departureCity').textContent = urlParams.get('departure');
+            // Get search parameters from sessionStorage
+            const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
+            const flightResults = JSON.parse(sessionStorage.getItem('flightResults') || '[]');
+            
+            // Update search summary
+            if (searchParams.origin && searchParams.destination) {
+                document.getElementById('departureCity').textContent = searchParams.origin;
+                document.getElementById('destinationCity').textContent = searchParams.destination;
             }
-            if (urlParams.has('destination')) {
-                document.getElementById('destinationCity').textContent = urlParams.get('destination');
-            }
-            if (urlParams.has('departDate')) {
-                // Format date for display
-                const departDate = new Date(urlParams.get('departDate'));
+            
+            if (searchParams.departureDate) {
+                const departDate = new Date(searchParams.departureDate);
                 document.getElementById('departureDate').textContent = departDate.toLocaleDateString('en-US', {
                     month: 'short', day: 'numeric', year: 'numeric'
                 });
             }
-            if (urlParams.has('returnDate')) {
-                // Format date for display
-                const returnDate = new Date(urlParams.get('returnDate'));
+            
+            if (searchParams.returnDate) {
+                const returnDate = new Date(searchParams.returnDate);
                 document.getElementById('returnDate').textContent = returnDate.toLocaleDateString('en-US', {
                     month: 'short', day: 'numeric', year: 'numeric'
                 });
             }
-            if (urlParams.has('passengers')) {
-                document.getElementById('passengerCount').textContent = urlParams.get('passengers');
+            
+            if (searchParams.adults) {
+                document.getElementById('passengerCount').textContent = searchParams.adults;
             }
             
-            // Load More buttons functionality
-            document.getElementById('loadMoreFlights').addEventListener('click', function() {
-                // In a real app, this would load more flights from an API
-                alert('In a real application, this would load more flight options from the server.');
-            });
+            // Display flight results
+            displayFlightResults(flightResults);
             
-            document.getElementById('loadMoreHotels').addEventListener('click', function() {
-                // In a real app, this would load more hotels from an API
-                alert('In a real application, this would load more hotel options from the server.');
-            });
-            
-            // Filter and sort functionality for hotels
-            document.getElementById('sortHotels').addEventListener('change', function() {
-                // In a real app, this would resort the hotel results
-                console.log('Sorting hotels by: ' + this.value);
-            });
-            
-            document.getElementById('filterStars').addEventListener('change', function() {
-                // In a real app, this would filter the hotel results
-                console.log('Filtering hotels by star rating: ' + this.value);
+            // Add tab switching event handlers
+            document.getElementById('hotels-tab').addEventListener('click', function() {
+                const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
+                searchHotels(searchParams.destination);
             });
         });
+        
+        function displayFlightResults(flights) {
+            const flightResultsContainer = document.getElementById('flightResults');
+            
+            // Hide loading indicator
+            document.getElementById('flightLoadingIndicator').style.display = 'none';
+            
+            // Check if we have results
+            if (!flights || flights.length === 0) {
+                flightResultsContainer.innerHTML = `
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle fa-lg me-2"></i>
+                        No flights found matching your search criteria. Please try different dates or destinations.
+                    </div>`;
+                return;
+            }
+            
+            // For each flight offer
+            flights.forEach((flight, index) => {
+                const segments = flight.itineraries[0].segments;
+                const firstSegment = segments[0];
+                const lastSegment = segments[segments.length - 1];
+                
+                // Calculate total duration in minutes
+                let totalDurationMinutes = 0;
+                segments.forEach(segment => {
+                    const durationParts = segment.duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
+                    const hours = durationParts[1] ? parseInt(durationParts[1]) : 0;
+                    const minutes = durationParts[2] ? parseInt(durationParts[2]) : 0;
+                    totalDurationMinutes += (hours * 60 + minutes);
+                });
+                
+                // Format duration as "Xh Ym"
+                const durationHours = Math.floor(totalDurationMinutes / 60);
+                const durationMinutes = totalDurationMinutes % 60;
+                const formattedDuration = `${durationHours}h ${durationMinutes > 0 ? durationMinutes + 'm' : ''}`;
+                
+                // Get stops information
+                const stops = segments.length - 1;
+                const stopsText = stops === 0 ? 'Non-stop' : 
+                                  stops === 1 ? '1 stop' : 
+                                  `${stops} stops`;
+                
+                // Format dates
+                const departureTime = new Date(firstSegment.departure.at).toLocaleTimeString('en-US', {
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true
+                });
+                
+                const arrivalTime = new Date(lastSegment.arrival.at).toLocaleTimeString('en-US', {
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true
+                });
+                
+                // Get airline info
+                const airlineCode = firstSegment.carrierCode;
+                const airlineName = getAirlineName(airlineCode); // You'll need to implement this function
+                
+                // Get price
+                const price = flight.price.total;
+                const currency = flight.price.currency;
+                
+                flightResultsContainer.innerHTML += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <img src="https://content.airhex.com/content/logos/airlines_${airlineCode}_100_100_s.png" 
+                                         alt="${airlineName}" class="img-fluid" style="max-height: 40px;"
+                                         onerror="this.src='images/generic-airline.png';">
+                                    <p class="mb-0">${airlineName}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="mb-0">${departureTime}</h5>
+                                            <p class="text-muted mb-0">${firstSegment.departure.iataCode}</p>
+                                        </div>
+                                        <div class="mx-2">
+                                            <i class="fas fa-plane"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0">${arrivalTime}</h5>
+                                            <p class="text-muted mb-0">${lastSegment.arrival.iataCode}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">${formattedDuration}</p>
+                                    <p class="text-muted mb-0">${stopsText}</p>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">Flight #${firstSegment.number}</p>
+                                    <p class="mb-0">${flight.travelerPricings[0].fareDetailsBySegment[0].cabin}</p>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <h4 class="text-primary mb-2">${currency} ${parseFloat(price).toFixed(2)}</h4>
+                                    <button class="btn btn-primary" onclick="selectFlight('${flight.id}')">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add load more button if needed
+            if (flights.length > 5) {
+                flightResultsContainer.innerHTML += `
+                    <div class="text-center mt-4 mb-5">
+                        <button id="loadMoreFlights" class="btn btn-outline-primary px-4">
+                            Show More Results <i class="fas fa-chevron-down ms-2"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Helper function to get airline names
+        function getAirlineName(code) {
+            const airlines = {
+                'AA': 'American Airlines',
+                'DL': 'Delta Air Lines',
+                'UA': 'United Airlines',
+                'LH': 'Lufthansa',
+                'BA': 'British Airways',
+                'AF': 'Air France',
+                'KL': 'KLM',
+                'EK': 'Emirates',
+                'QR': 'Qatar Airways',
+                'AI': 'Air India',
+                'IX': 'Air India Express',
+                'UK': 'Vistara',
+                'SG': 'SpiceJet',
+                '6E': 'IndiGo'
+                // Add more as needed
+            };
+            return airlines[code] || code;
+        }
+        
+        function selectFlight(flightId) {
+            const flights = JSON.parse(sessionStorage.getItem('flightResults') || '[]');
+            const selectedFlight = flights.find(flight => flight.id === flightId);
+            
+            if (selectedFlight) {
+                sessionStorage.setItem('selectedFlight', JSON.stringify(selectedFlight));
+                // Redirect to booking page or show booking modal
+                alert('In a production app, this would navigate to the flight booking page.');
+            }
+        }
+        
+        // Add these new functions here:
+        function showApiError(error) {
+            const flightResultsContainer = document.getElementById('flightResults');
+            flightResultsContainer.innerHTML = `
+                <div class="error-container">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Unable to Load Flight Results</h3>
+                    <p>${error.message || 'There was an error connecting to our flight search service.'}</p>
+                    <button class="btn btn-primary retry-btn" onclick="retrySearch()">
+                        <i class="fas fa-sync-alt me-2"></i> Try Again
+                    </button>
+                </div>
+            `;
+        }
+
+        function retrySearch() {
+            const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
+            // Reconstruct API URL
+            let apiUrl = `http://127.0.0.1:8000/api/flights/search?origin=${searchParams.origin}&destination=${searchParams.destination}&departure_date=${searchParams.departureDate}&adults=${searchParams.adults}&travel_class=${searchParams.travelClass}`;
+            
+            if (searchParams.returnDate) {
+                apiUrl += `&return_date=${searchParams.returnDate}`;
+            }
+            
+            // Show loading indicator
+            document.getElementById('flightResults').innerHTML = `
+                <div id="flightLoadingIndicator" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Loading flight results...</p>
+                </div>
+            `;
+            
+            // Retry the API call
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                sessionStorage.setItem('flightResults', JSON.stringify(data));
+                displayFlightResults(data);
+            })
+            .catch(error => {
+                console.error('Error retrying flight search:', error);
+                showApiError(error);
+            });
+        }
+
+        // Add this to your script section
+
+        // Add tab switching event handlers
+        document.getElementById('hotels-tab').addEventListener('click', function() {
+            const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
+            searchHotels(searchParams.destination);
+        });
+
+        function searchHotels(cityCode) {
+            const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
+            
+            // Show loading indicator
+            document.getElementById('hotelResults').innerHTML = `
+                <div id="hotelLoadingIndicator" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Loading hotel recommendations...</p>
+                </div>
+            `;
+            
+            // Build the API URL - using destination as city_code
+            const apiUrl = `http://127.0.0.1:8000/api/hotels/search?city_code=${cityCode}&check_in_date=${searchParams.departureDate}&check_out_date=${searchParams.returnDate || searchParams.departureDate}&adults=${searchParams.adults || 1}&radius=5&radius_unit=KM`;
+            
+            console.log('Calling hotel API:', apiUrl);
+            
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(hotels => {
+                console.log('Hotel results:', hotels);
+                
+                // Store hotel results
+                sessionStorage.setItem('hotelResults', JSON.stringify(hotels));
+                
+                // Display hotels
+                displayHotelResults(hotels);
+            })
+            .catch(error => {
+                console.error('Error fetching hotels:', error);
+                document.getElementById('hotelResults').innerHTML = `
+                    <div class="error-container">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Unable to Load Hotel Results</h3>
+                        <p>${error.message || 'There was an error connecting to our hotel search service.'}</p>
+                        <button class="btn btn-primary retry-btn" onclick="searchHotels('${cityCode}')">
+                            <i class="fas fa-sync-alt me-2"></i> Try Again
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function displayHotelResults(hotels) {
+            const hotelResultsContainer = document.getElementById('hotelResults');
+            
+            // If no hotels or empty array
+            if (!hotels || hotels.length === 0) {
+                hotelResultsContainer.innerHTML = `
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle fa-lg me-2"></i>
+                        No hotels found for this destination. Please try a different location.
+                    </div>
+                `;
+                return;
+            }
+            
+            // Start with a row
+            let hotelHTML = '<div class="row g-4">';
+            
+            // Add each hotel
+            hotels.forEach((hotel, index) => {
+                // Extract hotel details - handle different API response formats
+                const hotelName = hotel.name || hotel.hotel?.name || 'Hotel Name Unavailable';
+                const price = hotel.price ? 
+                    `$${parseFloat(hotel.price.total || hotel.price.base).toFixed(2)}` : 
+                    '$99.99'; // Fallback price
+                
+                const rating = hotel.rating || Math.floor(Math.random() * 2) + 3; // Random 3-5 rating if none provided
+                const address = hotel.address?.lines?.[0] || 
+                                hotel.hotel?.address?.lines?.[0] || 
+                                'Address unavailable';
+                
+                // Generate amenities
+                const amenities = ['WiFi', 'Breakfast', 'Pool', 'Parking', 'Gym'];
+                const randomAmenities = [];
+                for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
+                    const amenity = amenities[Math.floor(Math.random() * amenities.length)];
+                    if (!randomAmenities.includes(amenity)) {
+                        randomAmenities.push(amenity);
+                    }
+                }
+                
+                hotelHTML += `
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100">
+                            <img src="https://source.unsplash.com/featured/?hotel,room/${index}" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">${hotelName}</h5>
+                                    <span class="badge bg-primary">${rating.toFixed(1)} ★</span>
+                                </div>
+                                <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i>${address}</p>
+                                <div class="mb-3">
+                                    ${randomAmenities.map(amenity => `<span class="badge bg-light text-dark me-1">${amenity}</span>`).join('')}
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fs-4 fw-bold text-primary">${price}</span>
+                                        <span class="text-muted">/night</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary" onclick="selectHotel(${index})">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Close the row and add "explore more" button
+            hotelHTML += `
+                </div>
+                <div class="col-12 text-center mt-4 mb-5">
+                    <button id="loadMoreHotels" class="btn btn-outline-primary px-4">
+                        Explore More Hotels <i class="fas fa-chevron-down ms-2"></i>
+                    </button>
+                </div>
+            `;
+            
+            // Update the container
+            hotelResultsContainer.innerHTML = hotelHTML;
+            
+            // Add event listener to the "load more" button
+            document.getElementById('loadMoreHotels').addEventListener('click', function() {
+                alert('In a production app, this would load more hotel options.');
+            });
+        }
+
+        function selectHotel(index) {
+            const hotels = JSON.parse(sessionStorage.getItem('hotelResults') || '[]');
+            const selectedHotel = hotels[index];
+            
+            if (selectedHotel) {
+                sessionStorage.setItem('selectedHotel', JSON.stringify(selectedHotel));
+                alert('In a production app, this would navigate to the hotel booking page.');
+            }
+        }
     </script>
 </body>
 </html>

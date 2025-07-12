@@ -238,42 +238,38 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Login form submission
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
+                
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 
-                // In a real application, you would send these credentials to your backend API
-                console.log('Login attempt:', { email });
-                
-                // Simulate API call
-                fetch('http://127.0.0.1:8000/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        'username': email,
-                        'password': password
-                    })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            'username': email,
+                            'password': password
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Login failed');
                     }
-                    throw new Error('Login failed');
-                })
-                .then(data => {
-                    // Store the token in localStorage
+                    
+                    const data = await response.json();
+                    // Store token in localStorage
                     localStorage.setItem('access_token', data.access_token);
                     
-                    // Redirect to home page
+                    // Redirect to home page or search page
                     window.location.href = 'index.html';
-                })
-                .catch(error => {
+                } catch (error) {
                     alert('Login failed. Please check your credentials.');
                     console.error('Error:', error);
-                });
+                }
             });
             
             // Registration form submission

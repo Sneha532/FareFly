@@ -16,8 +16,7 @@ async def search_hotels(
     check_out_date: str = Query(..., description="Check-out date (YYYY-MM-DD)"),
     adults: int = Query(1, description="Number of adults"),
     radius: int = Query(5, description="Search radius"),
-    radius_unit: str = Query("KM", description="Radius unit (KM, MILE)"),
-    current_user = Depends(deps.get_current_active_user),
+    radius_unit: str = Query("KM", description="Radius unit (KM, MILE)")
 ) -> Any:
     """
     Search for hotels using Amadeus API

@@ -41,35 +41,46 @@
                     
                     <!-- Search Form -->
                     <div class="search-form p-4 rounded shadow">
-                        <form action="search-results.html" method="get">
+                        <form id="searchFlightForm" onsubmit="searchFlights(event)">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="departure" class="form-label">From</label>
-                                    <input type="text" class="form-control" id="departure" name="departure" placeholder="Departure City">
+                                    <label for="origin" class="form-label">From</label>
+                                    <input type="text" class="form-control" id="origin" name="origin" placeholder="Origin Airport Code (e.g. JFK)" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="destination" class="form-label">To</label>
-                                    <input type="text" class="form-control" id="destination" name="destination" placeholder="Destination City">
+                                    <input type="text" class="form-control" id="destination" name="destination" placeholder="Destination Airport Code (e.g. CDG)" required>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="departDate" class="form-label fw-medium">Depart Date</label>
-                                    <input type="date" class="form-control" id="departDate" name="departDate">
+                                    <label for="departureDate" class="form-label">Depart Date</label>
+                                    <input type="date" class="form-control" id="departureDate" name="departureDate" required>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="returnDate" class="form-label fw-medium">Return Date</label>
+                                    <label for="returnDate" class="form-label">Return Date</label>
                                     <input type="date" class="form-control" id="returnDate" name="returnDate">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="passengers" class="form-label">Passengers</label>
-                                    <select class="form-select" id="passengers" name="passengers">
+                                    <label for="adults" class="form-label">Passengers</label>
+                                    <select class="form-select" id="adults" name="adults">
                                         <option value="1">1 Passenger</option>
                                         <option value="2">2 Passengers</option>
                                         <option value="3">3 Passengers</option>
-                                        <option value="4">4+ Passengers</option>
+                                        <option value="4">4 Passengers</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="travelClass" class="form-label">Class</label>
+                                    <select class="form-select" id="travelClass" name="travelClass">
+                                        <option value="ECONOMY">Economy</option>
+                                        <option value="PREMIUM_ECONOMY">Premium Economy</option>
+                                        <option value="BUSINESS">Business</option>
+                                        <option value="FIRST">First Class</option>
                                     </select>
                                 </div>
                                 <div class="col-12 text-center mt-4">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">Search Flights</button>
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-search me-2"></i> Search Flights
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -193,5 +204,105 @@
 
     <!-- Bootstrap JS with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchFlights(event) {
+            event.preventDefault();
+            
+            // Show loading indicator
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Searching...';
+            
+            // Get form values
+            const origin = document.getElementById('origin').value.trim().toUpperCase();
+            const destination = document.getElementById('destination').value.trim().toUpperCase();
+            const departureDate = document.getElementById('departureDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            const adults = document.getElementById('adults').value;
+            const travelClass = document.getElementById('travelClass').value;
+            
+            // Get auth token from localStorage
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Accept': 'application/json'
+            };
+            
+            // Add auth token if available
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            
+            // Format dates (if needed)
+            const formattedDepartDate = departureDate.replace(/-/g, '-');
+            const formattedReturnDate = returnDate ? returnDate.replace(/-/g, '-') : null;
+            
+            // Construct API URL with parameters
+            let apiUrl = `http://127.0.0.1:8000/api/flights/search?origin=${origin}&destination=${destination}&departure_date=${formattedDepartDate}&adults=${adults}&travel_class=${travelClass}`;
+            
+            if (formattedReturnDate) {
+                apiUrl += `&return_date=${formattedReturnDate}`;
+            }
+            
+            // Call the API
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: headers
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    // Unauthorized - redirect to login
+                    window.location.href = 'login.html?redirect=index.html';
+                    throw new Error('Please log in to continue');
+                }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Search successful:', data);
+                
+                // Store flight results in sessionStorage
+                sessionStorage.setItem('flightResults', JSON.stringify(data));
+                
+                // Store search parameters for display
+                const searchParams = {
+                    origin: origin,
+                    destination: destination,
+                    departureDate: departureDate,
+                    returnDate: returnDate,
+                    adults: adults,
+                    travelClass: travelClass
+                };
+                sessionStorage.setItem('searchParams', JSON.stringify(searchParams));
+                
+                // Navigate to results page
+                window.location.href = 'search-results.html';
+            })
+            .catch(error => {
+                console.error('Error searching flights:', error);
+                if (!error.message.includes('Please log in')) {
+                    alert(`Error searching flights: ${error.message}. Please try again.`);
+                }
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
+        }
+        
+        // Set minimum date for departure to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('departureDate').min = today;
+            document.getElementById('returnDate').min = today;
+            
+            // Update return date min when departure date changes
+            document.getElementById('departureDate').addEventListener('change', function() {
+                document.getElementById('returnDate').min = this.value;
+            });
+        });
+    </script>
 </body>
 </html>
