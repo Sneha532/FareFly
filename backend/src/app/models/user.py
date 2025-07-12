@@ -15,3 +15,5 @@ class User(Base):
     
     # Relationships
     itineraries = relationship("Itinerary", back_populates="user")
+    flights = relationship("Flight", back_populates="user")  # Add this line
+    hotels = relationship("Hotel", back_populates="user")  # Add this line

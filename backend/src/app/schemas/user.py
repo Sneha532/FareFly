@@ -1,5 +1,5 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field 
+from typing import Optional, Any
 from datetime import datetime
 
 # Shared properties
@@ -9,9 +9,10 @@ class UserBase(BaseModel):
     is_active: Optional[bool] = True
 
 # Properties to receive via API on creation
-class UserCreate(UserBase):
+class UserCreate(BaseModel):
     email: EmailStr
     password: str
+    full_name: Optional[str] = None
 
 # Properties to receive via API on update
 class UserUpdate(UserBase):
@@ -32,3 +33,25 @@ class User(UserInDBBase):
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
     hashed_password: str
+
+class Token(BaseModel):
+    """Schema for the token response."""
+    access_token: str
+    token_type: str
+
+class TokenPayload(BaseModel):
+    """Schema for the token payload."""
+    sub: Optional[Any] = None
+    exp: Optional[int] = None
+
+    # models.py or schemas.py
+
+
+class UserRegister(BaseModel):
+    full_name: str
+    email: EmailStr
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

@@ -18,4 +18,4 @@ class Hotel(Base):
     room_details=Column(ARRAY(String),nullable=False)
     hotel_location=Column(String,nullable=False)
     # Relationships
-    itineraries = relationship("Itinerary", back_populates="user")
+    user = relationship("User", back_populates="hotels")  # Changed from itineraries

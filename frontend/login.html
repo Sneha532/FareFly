@@ -298,7 +298,7 @@
                     body: JSON.stringify({
                         'email': email,
                         'password': password,
-                        'full_name': name
+                        'full_name': name  // This now matches your updated schema
                     })
                 })
                 .then(response => {
@@ -308,9 +308,10 @@
                     throw new Error('Registration failed');
                 })
                 .then(data => {
-                    // Registration successful, switch to login tab
-                    alert('Registration successful! Please log in with your credentials.');
-                    document.getElementById('login-tab').click();
+                    // Registration successful AND we now have a token
+                    localStorage.setItem('access_token', data.access_token);
+                    alert('Registration successful! Redirecting to homepage.');
+                    window.location.href = 'index.html';
                 })
                 .catch(error => {
                     alert('Registration failed. Please try again.');

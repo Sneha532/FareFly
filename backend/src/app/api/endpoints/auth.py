@@ -1,56 +1,124 @@
-from datetime import timedelta
-from typing import Any
-
-from fastapi import APIRouter, Body, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from typing import Any
+from datetime import timedelta
+import uuid
 
-from src.app import crud, models, schemas
 from src.app.api import deps
-from src.app.core import security
+from src.app import crud, models
+from src.app.models.user import User
+from src.app.schemas import user as schemas
+from src.app.core.security import get_password_hash, verify_password, create_access_token
 from src.app.core.config import settings
 
 router = APIRouter()
 
-@router.post("/login", response_model=schemas.Token)
-def login_access_token(
-    db: Session = Depends(deps.get_db),
-    form_data: OAuth2PasswordRequestForm = Depends()
-) -> Any:
+@router.post("/register", response_model=schemas.Token)  # Changed to return Token
+def register(
+    user_in: schemas.UserRegister,
+    db: Session = Depends(deps.get_db)
+):
     """
-    OAuth2 compatible token login, get an access token for future requests
+    Register a new user and return access token.
+    """
+    # Check if user already exists
+    user = crud.user.get_by_email(db, email=user_in.email)
+    if user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
+    
+    # Create new user
+    user_id = str(uuid.uuid4())
+    db_user = User(
+        user_id=user_id,  # Use user_id since your model uses user_id
+        email=user_in.email,
+        hashed_password=get_password_hash(user_in.password),
+        full_name=user_in.full_name,  # Changed from user_in.name to user_in.full_name
+        is_active=True
+    )
+    
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    # Generate and return access token directly
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        subject=db_user.user_id,  # Use user_id not id
+        expires_delta=access_token_expires
+    )
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
+
+@router.post("/login", response_model=schemas.Token)
+def login(
+    user_in: schemas.UserLogin,
+    db: Session = Depends(deps.get_db)
+):
+    """Login for access token."""
+    # Find user by email
+    user = crud.user.get_by_email(db, email=user_in.email)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # Verify password
+    if not verify_password(user_in.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # Create access token
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        subject=user.user_id,  # Use user_id not id
+        expires_delta=access_token_expires
+    )
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
+
+# Keep your existing OAuth2 form login endpoint if needed
+@router.post("/token", response_model=schemas.Token)
+def login_access_token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(deps.get_db)
+):
+    """
+    OAuth2 compatible token login, get an access token for future requests.
     """
     user = crud.user.authenticate(
         db, email=form_data.username, password=form_data.password
     )
     if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
-    elif not crud.user.is_active(user):
-        raise HTTPException(status_code=400, detail="Inactive user")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+        )
+    if not crud.user.is_active(user):
+        raise HTTPException(
+            status_code=400, 
+            detail="Inactive user"
+        )
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    
     return {
-        "access_token": security.create_access_token(
+        "access_token": create_access_token(
             user.id, expires_delta=access_token_expires
         ),
         "token_type": "bearer",
     }
-
-@router.post("/register", response_model=schemas.User)
-def register_user(
-    *,
-    db: Session = Depends(deps.get_db),
-    user_in: schemas.UserCreate,
-) -> Any:
-    """
-    Register a new user
-    """
-    user = crud.user.get_by_email(db, email=user_in.email)
-    if user:
-        raise HTTPException(
-            status_code=400,
-            detail="The user with this email already exists in the system",
-        )
-    
-    user = crud.user.create(db, obj_in=user_in)
-    return user
