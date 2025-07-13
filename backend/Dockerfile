@@ -18,17 +18,17 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# MODIFIED: Fix paths - removed ./FareFly prefix
-COPY ./requirements.txt .
+# Fix the paths - use paths relative to the railway build context
+COPY FareFly/backend/requirements.txt .
 RUN pip install --no-cache-dir psycopg2-binary
 RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
 RUN pip install --no-cache-dir -r requirements.txt
 
-# MODIFIED: Fix paths - removed ./FareFly prefix
-COPY ./src/ /app/src/
-COPY ./alembic.ini .
+# Fix the paths - use paths relative to the railway build context
+COPY FareFly/backend/src/ /app/src/
+COPY FareFly/backend/alembic.ini .
 RUN mkdir -p /app/migrations
-COPY ./migrations/ /app/migrations/
+COPY FareFly/backend/migrations/ /app/migrations/
 
 # Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
