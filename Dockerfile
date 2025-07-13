@@ -1,16 +1,6 @@
-# Set the python version as a build-time argument
-# with Python 3.12 as the default
-ARG PYTHON_VERSION=3.11
-FROM python:${PYTHON_VERSION}-slim
+FROM python:3.11-slim
 
-# No virtual environment - use system Python directly
 WORKDIR /app
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PORT=8000 \
-    DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies
 RUN apt-get update && \
@@ -18,17 +8,20 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Use simpler paths for Railway - these paths are relative to the Dockerfile
-COPY requirements.txt .
-RUN pip install --no-cache-dir psycopg2-binary
-RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
+# Copy requirements and install dependencies
+COPY ./FareFly/backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Use simpler paths for source files
-COPY src/ /app/src/
-COPY alembic.ini .
+# Copy application files
+COPY ./FareFly/backend/src/ /app/src/
+COPY ./FareFly/backend/alembic.ini .
 RUN mkdir -p /app/migrations
-COPY migrations/ /app/migrations/
+COPY ./FareFly/backend/migrations/ /app/migrations/
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000
 
 # Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
