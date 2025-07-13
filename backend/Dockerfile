@@ -7,32 +7,37 @@ FROM python:${PYTHON_VERSION}-slim
 WORKDIR /app
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000 \
+    DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies (with minimal extras)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq-dev \
-    gcc \
-    && apt-get clean && \
+# Split the apt-get commands to reduce memory usage
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libpq-dev && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy and install requirements
+# Use a separate step for gcc to reduce memory pressure
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy and install requirements in smaller batches
 COPY requirements.txt .
+RUN pip install --no-cache-dir psycopg2-binary
+RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY src/ /app/src/
 COPY alembic.ini .
-
-# Create migrations directory (even if empty to prevent errors)
 RUN mkdir -p /app/migrations
 COPY migrations/ /app/migrations/
 
 # Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
-    echo 'alembic upgrade head || echo "Warning: Migration failed but continuing"' >> start.sh && \
     echo 'uvicorn src.app.main:app --host 0.0.0.0 --port ${PORT:-8000}' >> start.sh && \
     chmod +x start.sh
 
