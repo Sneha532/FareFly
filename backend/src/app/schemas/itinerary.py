@@ -72,7 +72,7 @@ class ItineraryInDBBase(ItineraryBase):
     attractions: List[Dict[str, Any]] = []
 
     class Config:
-        orm_mode = True
+        from_attributes= True
 
 # Properties to return via API
 class Itinerary(ItineraryInDBBase):

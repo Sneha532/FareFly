@@ -85,7 +85,7 @@ class FlightInDBBase(FlightBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes= True
 
 class Flight(FlightInDBBase):
     pass
