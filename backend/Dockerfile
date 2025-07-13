@@ -18,17 +18,17 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy requirements with correct path
-COPY ./FareFly/backend/requirements.txt .
+# MODIFIED: Fix paths - removed ./FareFly prefix
+COPY ./requirements.txt .
 RUN pip install --no-cache-dir psycopg2-binary
 RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files with correct paths
-COPY ./FareFly/backend/src/ /app/src/
-COPY ./FareFly/backend/alembic.ini .
+# MODIFIED: Fix paths - removed ./FareFly prefix
+COPY ./src/ /app/src/
+COPY ./alembic.ini .
 RUN mkdir -p /app/migrations
-COPY ./FareFly/backend/migrations/ /app/migrations/
+COPY ./migrations/ /app/migrations/
 
 # Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
