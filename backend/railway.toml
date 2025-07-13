@@ -1,9 +1,9 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "./Dockerfile"  
+dockerfilePath = "./FareFly/backend/Dockerfile"
 watchPatterns = [
-    "requirements.txt", 
-    "src/**", 
+    "FareFly/backend/requirements.txt", 
+    "FareFly/backend/src/**", 
     "railway.toml",
     "Dockerfile",
 ]
