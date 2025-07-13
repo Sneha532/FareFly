@@ -36,8 +36,11 @@ COPY alembic.ini .
 RUN mkdir -p /app/migrations
 COPY migrations/ /app/migrations/
 
-# Create startup script
+# Create startup script that's more resilient
 RUN echo '#!/bin/bash' > start.sh && \
+    echo 'echo "Starting application..."' >> start.sh && \
+    echo 'echo "Database URL: ${DATABASE_URL:0:25}..."' >> start.sh && \
+    echo 'alembic upgrade head || echo "Warning: Migration failed but continuing"' >> start.sh && \
     echo 'uvicorn src.app.main:app --host 0.0.0.0 --port ${PORT:-8000}' >> start.sh && \
     chmod +x start.sh
 
