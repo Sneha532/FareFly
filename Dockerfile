@@ -9,14 +9,14 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install dependencies
-COPY ./FareFly/backend/requirements.txt .
+COPY ./backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
-COPY ./FareFly/backend/src/ /app/src/
-COPY ./FareFly/backend/alembic.ini .
+COPY ./backend/src/ /app/src/
+COPY ./backend/alembic.ini .
 RUN mkdir -p /app/migrations
-COPY ./FareFly/backend/migrations/ /app/migrations/
+COPY ./backend/migrations/ /app/migrations/
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
