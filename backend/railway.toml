@@ -1,19 +1,7 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "./FareFly/backend/Dockerfile"
-watchPatterns = [
-    "FareFly/backend/requirements.txt", 
-    "FareFly/backend/src/**", 
-    "railway.toml",
-    "Dockerfile",
-]
+dockerfilePath = "./backend/Dockerfile"
 
 [deploy]
-startCommand = "./start.sh"
-healthcheckPath = "/"
-healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
-
-[vars]
-PORT = "8000"
+restartPolicyMaxRetries = 10
