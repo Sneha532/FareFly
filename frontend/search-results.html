@@ -680,7 +680,7 @@
                     `$${parseFloat(hotel.price.total || hotel.price.base).toFixed(2)}` : 
                     '$99.99'; // Fallback price
                 
-                const rating = hotel.rating || Math.floor(Math.random() * 2) + 3; // Random 3-5 rating if none provided
+                const rating = hotel.rating || Math.floor(Math.random() * 2) + 3;
                 const address = hotel.address?.lines?.[0] || 
                                 hotel.hotel?.address?.lines?.[0] || 
                                 'Address unavailable';
@@ -695,10 +695,18 @@
                     }
                 }
                 
+                // Get image from Unsplash (from backend response)
+                const imageUrl = hotel.image_url || `https://placehold.co/600x400/007bff/white?text=${encodeURIComponent(hotelName)}`;
+                const imageAttribution = hotel.image_author ? 
+                    `<small class="text-muted">Photo by <a href="${hotel.image_attribution_url}" target="_blank" class="text-decoration-none">${hotel.image_author}</a> on Unsplash</small>` : 
+                    '';
+                
                 hotelHTML += `
                     <div class="col-md-4">
                         <div class="card hotel-card h-100">
-                            <img src="https://source.unsplash.com/featured/?hotel,room/${index}" class="card-img-top" alt="Hotel" style="height: 200px; object-fit: cover;">
+                            <img src="${imageUrl}" class="card-img-top" alt="${hotelName}" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.src='https://placehold.co/600x400/007bff/white?text=${encodeURIComponent(hotelName)}';">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <h5 class="card-title mb-0">${hotelName}</h5>
@@ -715,6 +723,9 @@
                                     </div>
                                     <button class="btn btn-sm btn-primary" onclick="selectHotel(${index})">Select</button>
                                 </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                ${imageAttribution}
                             </div>
                         </div>
                     </div>
