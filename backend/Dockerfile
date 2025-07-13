@@ -33,7 +33,6 @@ RUN pip install -r requirements.txt
 
 # Copy the project code
 COPY ./src /app/src
-COPY ./.env /app/.env
 COPY ./alembic.ini /app/alembic.ini
 COPY ./migrations /app/migrations
 
