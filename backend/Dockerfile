@@ -18,17 +18,17 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Fix the paths - use paths relative to the railway build context
-COPY FareFly/backend/requirements.txt .
+# Use simpler paths for Railway - these paths are relative to the Dockerfile
+COPY requirements.txt .
 RUN pip install --no-cache-dir psycopg2-binary
 RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Fix the paths - use paths relative to the railway build context
-COPY FareFly/backend/src/ /app/src/
-COPY FareFly/backend/alembic.ini .
+# Use simpler paths for source files
+COPY src/ /app/src/
+COPY alembic.ini .
 RUN mkdir -p /app/migrations
-COPY FareFly/backend/migrations/ /app/migrations/
+COPY migrations/ /app/migrations/
 
 # Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
