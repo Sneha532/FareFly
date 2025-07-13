@@ -12,31 +12,25 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PORT=8000 \
     DEBIAN_FRONTEND=noninteractive
 
-# Split the apt-get commands to reduce memory usage
+# Install dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libpq-dev && \
+    apt-get install -y --no-install-recommends libpq-dev gcc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Use a separate step for gcc to reduce memory pressure
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Copy and install requirements in smaller batches
-COPY requirements.txt .
+# Copy requirements with correct path
+COPY ./FareFly/backend/requirements.txt .
 RUN pip install --no-cache-dir psycopg2-binary
 RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy alembic
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY src/ /app/src/
-COPY alembic.ini .
+# Copy application files with correct paths
+COPY ./FareFly/backend/src/ /app/src/
+COPY ./FareFly/backend/alembic.ini .
 RUN mkdir -p /app/migrations
-COPY migrations/ /app/migrations/
+COPY ./FareFly/backend/migrations/ /app/migrations/
 
-# Create startup script that's more resilient
+# Create startup script
 RUN echo '#!/bin/bash' > start.sh && \
     echo 'echo "Starting application..."' >> start.sh && \
     echo 'echo "Database URL: ${DATABASE_URL:0:25}..."' >> start.sh && \
