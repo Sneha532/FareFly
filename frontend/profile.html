@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - FareFly</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .profile-header {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+        }
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+        .tab-content {
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://placehold.co/200x50?text=FareFly" alt="FareFly" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Dynamic Nav Links based on auth state -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommendations.html">Tourist Spots</a>
+                    </li>
+                    
+                    <!-- Logged Out State (default) -->
+                    <li class="nav-item logged-out-nav">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    
+                    <!-- Logged In State (hidden by default) -->
+                    <li class="nav-item dropdown logged-in-nav" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name=User" alt="Profile" class="rounded-circle me-1" 
+                                 style="width: 28px; height: 28px;" id="profilePicture">
+                            <span id="userDisplayName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item active" href="profile.html">
+                                <i class="fas fa-user-circle me-2"></i> My Profile
+                            </a></li>
+                            <li><a class="dropdown-item" href="my-trips.html">
+                                <i class="fas fa-suitcase me-2"></i> My Trips
+                            </a></li>
+                            <li><a class="dropdown-item" href="bookings.html">
+                                <i class="fas fa-ticket-alt me-2"></i> My Bookings
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutButton">
+                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="container my-5">
+        <div class="profile-header text-center">
+            <img id="profileAvatarLarge" class="profile-avatar mb-3" src="https://ui-avatars.com/api/?name=User&size=150" alt="Profile Picture">
+            <h2 id="profileName">Your Name</h2>
+            <p class="text-muted" id="profileEmail">your.email@example.com</p>
+            <p><span class="badge bg-success">Account Active</span></p>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <!-- Profile Navigation -->
+                <div class="list-group">
+                    <a href="#personal-info" class="list-group-item list-group-item-action active" data-bs-toggle="tab">
+                        <i class="fas fa-user me-2"></i> Personal Information
+                    </a>
+                    <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="fas fa-lock me-2"></i> Security
+                    </a>
+                    <a href="#preferences" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="fas fa-sliders-h me-2"></i> Travel Preferences
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Personal Information Tab -->
+                    <div class="tab-pane fade show active" id="personal-info">
+                        <h3 class="mb-4">Personal Information</h3>
+                        <form id="personalInfoForm">
+                            <div class="alert alert-success d-none" id="personalInfoSuccess">
+                                Your profile information has been updated successfully!
+                            </div>
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email" readonly>
+                                <small class="text-muted">Email cannot be changed</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number (Optional)</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address (Optional)</label>
+                                <textarea class="form-control" id="address" rows="3" placeholder="Enter your address"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Security Tab -->
+                    <div class="tab-pane fade" id="security">
+                        <h3 class="mb-4">Security Settings</h3>
+                        <form id="passwordChangeForm">
+                            <div class="alert alert-success d-none" id="securitySuccess">
+                                Your password has been changed successfully!
+                            </div>
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword" placeholder="Enter your current password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="Enter your new password">
+                                <div class="form-text">Password must be at least 8 characters long and contain at least one uppercase letter, one number, and one special character.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your new password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-key me-2"></i> Change Password
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Preferences Tab -->
+                    <div class="tab-pane fade" id="preferences">
+                        <h3 class="mb-4">Travel Preferences</h3>
+                        <form id="preferencesForm">
+                            <div class="alert alert-success d-none" id="preferencesSuccess">
+                                Your travel preferences have been updated successfully!
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Preferred Seat</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="seatPreference" id="windowSeat" value="window">
+                                    <label class="form-check-label" for="windowSeat">Window Seat</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="seatPreference" id="aisleSeat" value="aisle">
+                                    <label class="form-check-label" for="aisleSeat">Aisle Seat</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="seatPreference" id="noPreference" value="no-preference" checked>
+                                    <label class="form-check-label" for="noPreference">No Preference</label>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Trip Types</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="businessTrips" name="tripTypes" value="business">
+                                    <label class="form-check-label" for="businessTrips">Business Travel</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="leisureTrips" name="tripTypes" value="leisure">
+                                    <label class="form-check-label" for="leisureTrips">Leisure Travel</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="familyTrips" name="tripTypes" value="family">
+                                    <label class="form-check-label" for="familyTrips">Family Travel</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accommodationPreference" class="form-label">Accommodation Preference</label>
+                                <select class="form-select" id="accommodationPreference">
+                                    <option value="" selected>Select preference</option>
+                                    <option value="budget">Budget-friendly</option>
+                                    <option value="mid-range">Mid-range</option>
+                                    <option value="luxury">Luxury</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dietaryRestrictions" class="form-label">Dietary Restrictions (Optional)</label>
+                                <input type="text" class="form-control" id="dietaryRestrictions" placeholder="e.g., Vegetarian, Gluten-free, etc.">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Preferences
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>FareFly</h5>
+                    <p class="text-muted">Your ultimate travel companion</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                        <li><a href="recommendations.html" class="text-decoration-none text-muted">Recommendations</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Connect with Us</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="text-muted"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 FareFly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Profile Page Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = 'login.html?redirect=profile.html';
+                return;
+            }
+            
+            try {
+                // Fetch user profile data
+                const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+                
+                const userData = await response.json();
+                
+                // Populate profile data
+                document.getElementById('profileName').textContent = userData.full_name || 'User';
+                document.getElementById('profileEmail').textContent = userData.email;
+                document.getElementById('fullName').value = userData.full_name || '';
+                document.getElementById('email').value = userData.email;
+                
+                // Set avatar
+                const initials = userData.full_name ? 
+                    userData.full_name.split(' ').map(n => n[0]).join('') : 
+                    userData.email[0].toUpperCase();
+                    
+                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=random&size=150`;
+                document.getElementById('profileAvatarLarge').src = avatarUrl;
+                document.getElementById('profilePicture').src = avatarUrl.replace('size=150', 'size=28');
+                document.getElementById('userDisplayName').textContent = userData.full_name || userData.email.split('@')[0];
+                
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Failed to load profile data. Please try again later.');
+            }
+            
+            // Handle personal info form submission
+            document.getElementById('personalInfoForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    full_name: document.getElementById('fullName').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value
+                };
+                
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/users/me', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    if (response.ok) {
+                        const successAlert = document.getElementById('personalInfoSuccess');
+                        successAlert.classList.remove('d-none');
+                        
+                        // Update profile display
+                        const userData = await response.json();
+                        document.getElementById('profileName').textContent = userData.full_name || 'User';
+                        document.getElementById('userDisplayName').textContent = userData.full_name || userData.email.split('@')[0];
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            successAlert.classList.add('d-none');
+                        }, 3000);
+                    } else {
+                        const data = await response.json();
+                        alert(`Failed to update profile: ${data.detail || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    alert('Failed to update profile. Please try again later.');
+                }
+            });
+            
+            // Handle password change form submission
+            document.getElementById('passwordChangeForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Simple validation
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    return;
+                }
+                
+                if (newPassword.length < 8) {
+                    alert('Password must be at least 8 characters long');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/users/password', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            current_password: currentPassword,
+                            new_password: newPassword
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const successAlert = document.getElementById('securitySuccess');
+                        successAlert.classList.remove('d-none');
+                        
+                        // Reset form
+                        this.reset();
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            successAlert.classList.add('d-none');
+                        }, 3000);
+                    } else {
+                        const data = await response.json();
+                        alert(`Failed to change password: ${data.detail || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Error changing password:', error);
+                    alert('Failed to change password. Please try again later.');
+                }
+            });
+            
+            // Handle preferences form submission
+            document.getElementById('preferencesForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const seatPreference = document.querySelector('input[name="seatPreference"]:checked').value;
+                const tripTypes = Array.from(document.querySelectorAll('input[name="tripTypes"]:checked'))
+                    .map(cb => cb.value);
+                const accommodationPreference = document.getElementById('accommodationPreference').value;
+                const dietaryRestrictions = document.getElementById('dietaryRestrictions').value;
+                
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/users/preferences', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            seat_preference: seatPreference,
+                            trip_types: tripTypes,
+                            accommodation_preference: accommodationPreference,
+                            dietary_restrictions: dietaryRestrictions
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const successAlert = document.getElementById('preferencesSuccess');
+                        successAlert.classList.remove('d-none');
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            successAlert.classList.add('d-none');
+                        }, 3000);
+                    } else {
+                        const data = await response.json();
+                        alert(`Failed to update preferences: ${data.detail || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Error updating preferences:', error);
+                    alert('Failed to update preferences. Please try again later.');
+                }
+            });
+            
+            // Handle logout
+            document.getElementById('logoutButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('access_token');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+    
+    <!-- Auth State Management Script -->
+    <script>
+        // Check authentication state on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log("Auth script running...");
+            
+            // Check if we have a token
+            const token = localStorage.getItem('access_token');
+            console.log("Token found in storage:", token ? "Yes" : "No");
+            
+            if (token) {
+                try {
+                    console.log("Fetching user profile...");
+                    // Fetch user profile 
+                    const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    console.log("Profile API response status:", response.status);
+                    
+                    if (response.ok) {
+                        const userData = await response.json();
+                        console.log("User data received:", userData);
+                        
+                        // Update UI for logged-in state
+                        document.querySelectorAll('.logged-out-nav').forEach(el => el.style.display = 'none');
+                        document.querySelectorAll('.logged-in-nav').forEach(el => el.style.display = 'block');
+                        
+                        // Set user display name
+                        const displayName = userData.full_name || userData.email.split('@')[0];
+                        document.getElementById('userDisplayName').textContent = displayName;
+                        console.log("Display name set to:", displayName);
+                        
+                        // Set profile picture (using first letter of name)
+                        const initials = userData.full_name ? 
+                            userData.full_name.split(' ').map(n => n[0]).join('') : 
+                            userData.email[0].toUpperCase();
+                        document.getElementById('profilePicture').src = 
+                            `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=random`;
+                        
+                    } else {
+                        // Token invalid, remove it
+                        console.log("Invalid token, removing from storage");
+                        localStorage.removeItem('access_token');
+                        showLoggedOutState();
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    showLoggedOutState();
+                }
+            } else {
+                console.log("No token found, showing logged out state");
+                showLoggedOutState();
+            }
+        });
+        
+        function showLoggedOutState() {
+            console.log("Showing logged out UI");
+            document.querySelectorAll('.logged-in-nav').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.logged-out-nav').forEach(el => el.style.display = 'block');
+            
+            // Redirect to login if on profile page
+            if (window.location.pathname.includes('profile.html')) {
+                window.location.href = 'login.html?redirect=profile.html';
+            }
+        }
+    </script>
+</body>
+</html>

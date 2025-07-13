@@ -33,6 +33,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Dynamic Nav Links based on auth state -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">Home</a>
@@ -40,10 +41,34 @@
                     <li class="nav-item">
                         <a class="nav-link" href="recommendations.html">Tourist Spots</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-outline-primary">
-                            <i class="fas fa-user-circle me-1"></i> Login
+                    
+                    <!-- Logged Out State (default) -->
+                    <li class="nav-item logged-out-nav">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    
+                    <!-- Logged In State (hidden by default) -->
+                    <li class="nav-item dropdown logged-in-nav" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name=User" alt="Profile" class="rounded-circle me-1" 
+                                 style="width: 28px; height: 28px;" id="profilePicture">
+                            <span id="userDisplayName">User</span>
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">
+                                <i class="fas fa-user-circle me-2"></i> My Profile
+                            </a></li>
+                            <li><a class="dropdown-item" href="my-trips.html">
+                                <i class="fas fa-suitcase me-2"></i> My Trips
+                            </a></li>
+                            <li><a class="dropdown-item" href="bookings.html">
+                                <i class="fas fa-ticket-alt me-2"></i> My Bookings
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutButton">
+                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            </a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -723,6 +748,82 @@
                 sessionStorage.setItem('selectedHotel', JSON.stringify(selectedHotel));
                 alert('In a production app, this would navigate to the hotel booking page.');
             }
+        }
+    </script>
+
+    <!-- Auth State Management Script -->
+    <script>
+        // Check authentication state on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log("Auth script running...");
+            
+            // Check if we have a token
+            const token = localStorage.getItem('access_token');
+            console.log("Token found in storage:", token ? "Yes" : "No");
+            
+            if (token) {
+                try {
+                    console.log("Fetching user profile...");
+                    // Fetch user profile 
+                    const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    console.log("Profile API response status:", response.status);
+                    
+                    if (response.ok) {
+                        const userData = await response.json();
+                        console.log("User data received:", userData);
+                        
+                        // Update UI for logged-in state
+                        document.querySelectorAll('.logged-out-nav').forEach(el => el.style.display = 'none');
+                        document.querySelectorAll('.logged-in-nav').forEach(el => el.style.display = 'block');
+                        
+                        // Set user display name
+                        const displayName = userData.full_name || userData.email.split('@')[0];
+                        document.getElementById('userDisplayName').textContent = displayName;
+                        console.log("Display name set to:", displayName);
+                        
+                        // Set profile picture (using first letter of name)
+                        const initials = userData.full_name ? 
+                            userData.full_name.split(' ').map(n => n[0]).join('') : 
+                            userData.email[0].toUpperCase();
+                        document.getElementById('profilePicture').src = 
+                            `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=random`;
+                        
+                    } else {
+                        // Token invalid, remove it
+                        console.log("Invalid token, removing from storage");
+                        localStorage.removeItem('access_token');
+                        showLoggedOutState();
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    showLoggedOutState();
+                }
+            } else {
+                console.log("No token found, showing logged out state");
+                showLoggedOutState();
+            }
+            
+            // Handle logout button
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Logout clicked, removing token");
+                    localStorage.removeItem('access_token');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+        
+        function showLoggedOutState() {
+            console.log("Showing logged out UI");
+            document.querySelectorAll('.logged-in-nav').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.logged-out-nav').forEach(el => el.style.display = 'block');
         }
     </script>
 </body>

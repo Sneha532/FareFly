@@ -20,7 +20,11 @@ class UserUpdate(UserBase):
 
 # Properties shared by models stored in DB
 class UserInDBBase(UserBase):
-    id: str
+    # Change from 'use_idid' to 'id'
+    id: str  # This field matches what you return in the /me endpoint
+    email: EmailStr
+    full_name: Optional[str]
+    is_active: bool
     created_at: datetime
     
     class Config:
@@ -28,7 +32,11 @@ class UserInDBBase(UserBase):
 
 # Additional properties to return via API
 class User(UserInDBBase):
-    pass
+    """
+    User schema to return to client
+    """
+    class Config:
+        orm_mode = True
 
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):

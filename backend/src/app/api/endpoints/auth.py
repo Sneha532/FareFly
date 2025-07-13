@@ -122,3 +122,20 @@ def login_access_token(
         ),
         "token_type": "bearer",
     }
+
+@router.get("/me", response_model=schemas.User)
+def get_current_user(
+    current_user: User = Depends(deps.get_current_user)
+):
+    """
+    Get current user profile
+    """
+    # Convert User model to dictionary with correct field mapping
+    user_data = {
+        "id": current_user.user_id,  # Map user_id to id expected by schema
+        "email": current_user.email,
+        "full_name": current_user.full_name,
+        "is_active": current_user.is_active,
+        "created_at": current_user.created_at
+    }
+    return user_data

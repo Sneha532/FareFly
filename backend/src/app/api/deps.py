@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from src.app import crud, models, schemas
 from src.app.core.config import settings
 from src.app.db.session import SessionLocal
+from src.app.models.user import User  # Add this import
 
 # OAuth2 token URL
 oauth2_scheme = OAuth2PasswordBearer(
@@ -28,28 +29,33 @@ def get_db() -> Generator:
 
 # User dependencies
 def get_current_user(
-    db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
-) -> models.User:
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme)
+) -> User:
     """
-    Dependency to get the current authenticated user.
+    Get current user from JWT token
     """
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
-        token_data = schemas.TokenPayload(**payload)
-    except (JWTError, ValidationError):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials",
-        )
-    
-    user = crud.user.get(db, id=token_data.sub)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
-        )
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+        token_data = schemas.TokenPayload(sub=user_id)
+    except JWTError:
+        raise credentials_exception
+        
+    user = db.query(User).filter(User.user_id == token_data.sub).first()
+    if user is None:
+        raise credentials_exception
+        
     return user
 
 def get_current_active_user(
