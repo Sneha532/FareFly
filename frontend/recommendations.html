@@ -118,6 +118,9 @@
         </div>
     </div>
 
+    <!-- Add this before your other scripts -->
+    <script src="config.js"></script>
+
     <script>
         document.getElementById('recommendationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -141,7 +144,8 @@
             
             try {
                 // Make API request
-                const response = await fetch(`http://127.0.0.1:8000/api/recommendations/tourist-places?${params.toString()}`);
+                const response = await fetch(getApiUrl(ENV.API.ENDPOINTS.RECOMMENDATIONS) + `
+/tourist-places?${params.toString()}`);
                 
                 if (!response.ok) {
                     throw new Error(`Error: ${response.statusText}`);
@@ -215,7 +219,8 @@
                 try {
                     console.log("Fetching user profile...");
                     // Fetch user profile 
-                    const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+                   const response = await fetch(getApiUrl(ENV.API.ENDPOINTS.USER_PROFILE)
+, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }

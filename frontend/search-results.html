@@ -545,8 +545,9 @@
 
         function retrySearch() {
             const searchParams = JSON.parse(sessionStorage.getItem('searchParams') || '{}');
-            // Reconstruct API URL
-            let apiUrl = `http://127.0.0.1:8000/api/flights/search?origin=${searchParams.origin}&destination=${searchParams.destination}&departure_date=${searchParams.departureDate}&adults=${searchParams.adults}&travel_class=${searchParams.travelClass}`;
+            // Reconstruct API URL using config.js
+            let apiUrl = getApiUrl(ENV.API.ENDPOINTS.FLIGHT_SEARCH) + 
+                `?origin=${searchParams.origin}&destination=${searchParams.destination}&departure_date=${searchParams.departureDate}&adults=${searchParams.adults}&travel_class=${searchParams.travelClass}`;
             
             if (searchParams.returnDate) {
                 apiUrl += `&return_date=${searchParams.returnDate}`;
@@ -607,7 +608,8 @@
             `;
             
             // Build the API URL - using destination as city_code
-            const apiUrl = `http://127.0.0.1:8000/api/hotels/search?city_code=${cityCode}&check_in_date=${searchParams.departureDate}&check_out_date=${searchParams.returnDate || searchParams.departureDate}&adults=${searchParams.adults || 1}&radius=5&radius_unit=KM`;
+            const apiUrl = getApiUrl(ENV.API.ENDPOINTS.HOTEL_SEARCH) + 
+                `?city_code=${cityCode}&check_in_date=${searchParams.departureDate}&check_out_date=${searchParams.returnDate || searchParams.departureDate}&adults=${searchParams.adults || 1}&radius=5&radius_unit=KM`;
             
             console.log('Calling hotel API:', apiUrl);
             
@@ -768,7 +770,7 @@
                 try {
                     console.log("Fetching user profile...");
                     // Fetch user profile 
-                    const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+                    const response = await fetch(getApiUrl(ENV.API.ENDPOINTS.USER_PROFILE), {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -829,5 +831,8 @@
             document.querySelectorAll('.logged-out-nav').forEach(el => el.style.display = 'block');
         }
     </script>
+
+    <!-- Add this before your other scripts -->
+    <script src="config.js"></script>
 </body>
 </html>
