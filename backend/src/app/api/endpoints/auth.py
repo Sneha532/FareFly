@@ -14,7 +14,7 @@ from src.app.core.config import settings
 
 router = APIRouter()
 
-@router.post("/register", response_model=schemas.Token)  # Changed to return Token
+@router.post("/register", response_model=schemas.Token)
 def register(
     user_in: schemas.UserRegister,
     db: Session = Depends(deps.get_db)
@@ -30,13 +30,13 @@ def register(
             detail="Email already registered"
         )
     
-    # Create new user
+    # Create new user - FIXED: Use correct field names
     user_id = str(uuid.uuid4())
     db_user = User(
-        user_id=user_id,  # Use user_id since your model uses user_id
+        user_id=user_id,  # This matches your User model
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
-        full_name=user_in.full_name,  # Changed from user_in.name to user_in.full_name
+        full_name=user_in.full_name,
         is_active=True
     )
     
@@ -44,10 +44,10 @@ def register(
     db.commit()
     db.refresh(db_user)
     
-    # Generate and return access token directly
+    # Generate access token using user_id
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        subject=db_user.user_id,  # Use user_id not id
+        subject=db_user.user_id,  # Use user_id consistently
         expires_delta=access_token_expires
     )
     

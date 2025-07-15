@@ -323,10 +323,11 @@
             });
             
             // Registration form submission
-            document.getElementById('registerForm').addEventListener('submit', function(e) {
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const name = document.getElementById('registerName').value;
-                const email = document.getElementById('registerEmail').value;
+                
+                const name = document.getElementById('registerName').value.trim();
+                const email = document.getElementById('registerEmail').value.trim();
                 const password = document.getElementById('registerPassword').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
                 
@@ -336,37 +337,38 @@
                     return;
                 }
                 
-                // In a real application, you would send this data to your backend API
-                console.log('Registration attempt:', { name, email });
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long');
+                    return;
+                }
                 
-                // Simulate API call
-                fetch('http://127.0.0.1:8000/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        'email': email,
-                        'password': password,
-                        'full_name': name  // This now matches your updated schema
-                    })
-                })
-                .then(response => {
+                try {
+                    const response = await fetch(getApiUrl(ENV.API.ENDPOINTS.REGISTER), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password,
+                            full_name: name  // Make sure this matches your schema
+                        })
+                    });
+                    
                     if (response.ok) {
-                        return response.json();
+                        const data = await response.json();
+                        localStorage.setItem('access_token', data.access_token);
+                        alert('Registration successful! Redirecting to homepage.');
+                        window.location.href = 'index.html';
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Registration failed:', errorData);
+                        alert(`Registration failed: ${errorData.detail || 'Please try again.'}`);
                     }
-                    throw new Error('Registration failed');
-                })
-                .then(data => {
-                    // Registration successful AND we now have a token
-                    localStorage.setItem('access_token', data.access_token);
-                    alert('Registration successful! Redirecting to homepage.');
-                    window.location.href = 'index.html';
-                })
-                .catch(error => {
-                    alert('Registration failed. Please try again.');
-                    console.error('Error:', error);
-                });
+                } catch (error) {
+                    console.error('Network error during registration:', error);
+                    alert('Registration failed due to network error. Please try again.');
+                }
             });
         });
     </script>
